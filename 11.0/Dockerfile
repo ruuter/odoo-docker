@@ -53,8 +53,8 @@ RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main' > /etc
 
 # Install Odoo
 ENV ODOO_VERSION 11.0
-ARG ODOO_RELEASE=20200826
-ARG ODOO_SHA=cf5c3c766ba42861ede4ec9b4027dfc910818a01
+ARG ODOO_RELEASE=20200916
+ARG ODOO_SHA=ae8c901820ed179e36308d8e2c53521abecb6be3
 RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
         && echo "${ODOO_SHA} odoo.deb" | sha1sum -c - \
         && apt-get update \
