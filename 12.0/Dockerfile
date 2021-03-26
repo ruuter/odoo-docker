@@ -17,6 +17,7 @@ RUN apt-get update \
             dirmngr \
             fonts-noto-cjk \
             gnupg \
+            ipython3 \
             libssl1.0-dev \
             node-less \
             python3-num2words \
