@@ -66,6 +66,10 @@ RUN echo "deb http://deb.nodesource.com/node_8.x stretch main" > /etc/apt/source
     && npm install -g rtlcss \
     && rm -rf /var/lib/apt/lists/*
 
+# Install pip packages
+RUN pip3 install \
+    cachetools
+
 # Install Odoo
 ENV ODOO_VERSION 12.0
 ARG ODOO_RELEASE=20211006
