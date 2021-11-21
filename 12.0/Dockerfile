@@ -72,8 +72,8 @@ RUN pip3 install \
 
 # Install Odoo
 ENV ODOO_VERSION 12.0
-ARG ODOO_RELEASE=20211006
-ARG ODOO_SHA=f32dcd82b04e9a93e17a7d4b3ab471dc20408253
+ARG ODOO_RELEASE=20211011
+ARG ODOO_SHA=c49a1b0aac152641250311623cfe25fe4fb12782
 RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
         && echo "${ODOO_SHA} odoo.deb" | sha1sum -c - \
         && apt-get update \
