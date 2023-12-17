@@ -27,6 +27,7 @@ RUN apt-get update && \
         python3-odf \
         python3-pdfminer \
         python3-pip \
+        python3-pycountry \
         python3-phonenumbers \
         python3-pyldap \
         python3-qrcode \
