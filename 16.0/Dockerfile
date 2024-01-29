@@ -21,14 +21,15 @@ RUN apt-get update && \
         node-less \
         npm \
         ipython3 \
+        python3-google-auth \
         python3-ipython \
         python3-magic \
         python3-num2words \
         python3-odf \
         python3-pdfminer \
+        python3-phonenumbers \
         python3-pip \
         python3-pycountry \
-        python3-phonenumbers \
         python3-pyldap \
         python3-qrcode \
         python3-renderpm \
