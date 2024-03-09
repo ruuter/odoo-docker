@@ -54,6 +54,9 @@ RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' > /etc/
 # Install rtlcss (on Debian buster)
 RUN npm install -g rtlcss
 
+# Install cachetools for oca/connector
+RUN pip3 install cachetools
+
 # Install Odoo
 ENV ODOO_VERSION 13.0
 ARG ODOO_RELEASE=20221005
