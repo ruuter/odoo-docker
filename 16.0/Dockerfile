@@ -71,6 +71,9 @@ RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main' > /et
 # Install rtlcss (on Debian buster)
 RUN npm install -g rtlcss
 
+# Install fonttools for PDF/A compliancy
+RUN pip3 install fonttools
+
 # Install Odoo
 ENV ODOO_VERSION 16.0
 ARG ODOO_RELEASE=20240126
