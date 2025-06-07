@@ -76,8 +76,8 @@ RUN pip3 install fonttools
 
 # Install Odoo
 ENV ODOO_VERSION 16.0
-ARG ODOO_RELEASE=20241220
-ARG ODOO_SHA=6312a02426f8b8c8b7578947cd8733e8f042de54
+ARG ODOO_RELEASE=20250606
+ARG ODOO_SHA=6c17bfea51c8b371140b947b14e7e44ef65f1b08
 RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
     && echo "${ODOO_SHA} odoo.deb" | sha1sum -c - \
     && apt-get update \
