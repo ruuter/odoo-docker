@@ -17,6 +17,8 @@ RUN apt-get update && \
         libssl-dev \
         node-less \
         npm \
+        ipython3 \
+        python3-ipython \
         python3-num2words \
         python3-pdfminer \
         python3-pip \
