@@ -3,7 +3,7 @@ FROM debian:buster-slim
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
 # Generate locale C.UTF-8 for postgres and general locale data
-ENV LANG C.UTF-8
+ENV LANG=C.UTF-8
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN apt-get update && \
@@ -58,7 +58,7 @@ RUN npm install -g rtlcss
 RUN pip3 install cachetools
 
 # Install Odoo
-ENV ODOO_VERSION 14.0
+ENV ODOO_VERSION=14.0
 ARG ODOO_RELEASE=20231106
 ARG ODOO_SHA=a50db3bf2d55c64bd51b6b56a2e3d0dbafc44894
 RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
@@ -81,7 +81,7 @@ VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
 EXPOSE 8069 8071 8072
 
 # Set the default config file
-ENV ODOO_RC /etc/odoo/odoo.conf
+ENV ODOO_RC=/etc/odoo/odoo.conf
 
 COPY wait-for-psql.py /usr/local/bin/wait-for-psql.py
 
