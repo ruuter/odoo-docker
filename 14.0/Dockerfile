@@ -56,7 +56,7 @@ RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main' > /et
 RUN npm install -g rtlcss
 
 # Install cachetools for oca/connector
-RUN pip3 install cachetools
+RUN pip3 install cachetools rich
 
 # Install Odoo
 ENV ODOO_VERSION=14.0
