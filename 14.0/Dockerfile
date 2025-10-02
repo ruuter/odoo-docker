@@ -12,6 +12,7 @@ RUN apt-get update && \
         curl \
         dirmngr \
         fonts-noto-cjk \
+        gsfonts \
         gnupg \
         libssl-dev \
         node-less \
