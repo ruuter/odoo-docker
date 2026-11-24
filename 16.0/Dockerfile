@@ -1,5 +1,5 @@
 FROM debian:bullseye-slim
-MAINTAINER Odoo S.A. <info@odoo.com>
+LABEL maintainer="Uku Lagle <info@ruuter.net>"
 
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
@@ -9,39 +9,47 @@ ENV LANG C.UTF-8
 # Retrieve the target architecture to install the correct wkhtmltopdf package
 ARG TARGETARCH
 
+# Point apt to archive.debian.org (bullseye is EOL)
+RUN printf '%s\n' \
+    'deb http://archive.debian.org/debian bullseye main' \
+    'deb http://archive.debian.org/debian bullseye-updates main' \
+    'deb http://archive.debian.org/debian-security bullseye-security main' \
+    > /etc/apt/sources.list \
+    && echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until
+
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        ca-certificates \
-        curl \
-        dirmngr \
-        fonts-noto-cjk \
-        gnupg \
-        libssl-dev \
-        node-less \
-        npm \
-        ipython3 \
-        python3-google-auth \
-        python3-ipython \
-        python3-magic \
-        python3-num2words \
-        python3-odf \
-        python3-pdfminer \
-        python3-phonenumbers \
-        python3-pip \
-        python3-pycountry \
-        python3-pyldap \
-        python3-qrcode \
-        python3-renderpm \
-        python3-setuptools \
-        python3-slugify \
-        python3-vobject \
-        python3-watchdog \
-        python3-xlrd \
-        python3-xlwt \
-        xz-utils && \
+    ca-certificates \
+    curl \
+    dirmngr \
+    fonts-noto-cjk \
+    gnupg \
+    libssl-dev \
+    node-less \
+    npm \
+    ipython3 \
+    python3-google-auth \
+    python3-ipython \
+    python3-magic \
+    python3-num2words \
+    python3-odf \
+    python3-pdfminer \
+    python3-phonenumbers \
+    python3-pip \
+    python3-pycountry \
+    python3-pyldap \
+    python3-qrcode \
+    python3-renderpm \
+    python3-setuptools \
+    python3-slugify \
+    python3-vobject \
+    python3-watchdog \
+    python3-xlrd \
+    python3-xlwt \
+    xz-utils && \
     if [ -z "${TARGETARCH}" ]; then \
-        TARGETARCH="$(dpkg --print-architecture)"; \
+    TARGETARCH="$(dpkg --print-architecture)"; \
     fi; \
     WKHTMLTOPDF_ARCH=${TARGETARCH} && \
     case ${TARGETARCH} in \
@@ -54,8 +62,8 @@ RUN apt-get update && \
     && apt-get install -y --no-install-recommends ./wkhtmltox.deb \
     && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
 
-# install latest postgresql-client
-RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main' > /etc/apt/sources.list.d/pgdg.list \
+# install postgresql-client (bullseye moved to apt-archive.postgresql.org)
+RUN echo 'deb http://apt-archive.postgresql.org/pub/repos/apt/ bullseye-pgdg main' > /etc/apt/sources.list.d/pgdg.list \
     && GNUPGHOME="$(mktemp -d)" \
     && export GNUPGHOME \
     && repokey='B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8' \
@@ -76,13 +84,10 @@ RUN pip3 install fonttools
 
 # Install Odoo
 ENV ODOO_VERSION 16.0
-ARG ODOO_RELEASE=20260817
-ARG ODOO_SHA=77ef3bb6a03e1ba556fbb4405c8abb4ced16e2b8
-RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
-    && echo "${ODOO_SHA} odoo.deb" | sha1sum -c - \
-    && apt-get update \
-    && apt-get -y install --no-install-recommends ./odoo.deb \
-    && rm -rf /var/lib/apt/lists/* odoo.deb
+COPY ./odoo.deb /tmp/odoo.deb
+RUN apt-get update \
+    && apt-get -y install --no-install-recommends /tmp/odoo.deb \
+    && rm -rf /var/lib/apt/lists/* /tmp/odoo.deb
 
 # Copy entrypoint script and Odoo configuration file
 COPY ./entrypoint.sh /
